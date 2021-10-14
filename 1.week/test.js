@@ -1,5 +1,5 @@
-const salt = "mySecretSalt"
-const text = "the secret string"
+const salt = "ajajaj"
+const text = "Muhammet COkyaman bugun yutta kalicak"
 const encrypt = (text,salt) => {
     let textToChars = text.split("").map(i => i.split('').map(c => c.charCodeAt(0)));
     let applySaltToChar = textToChars.map(code => salt.split('').map(c => c.charCodeAt(0)).reduce((a,b) => a ^ b,code));
