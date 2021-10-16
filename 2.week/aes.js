@@ -1,27 +1,29 @@
 const aesjs = require("aes-js");
 const pbkdf2 = require("pbkdf2");
 
-var key = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ];
-const text = "Text may be any length you wish, no padding is required.";
-const textBytes = aesjs.utils.utf8.toBytes(text);
-console.log(textBytes)
-var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
-var encryptedBytes = aesCtr.encrypt(textBytes);
-console.log(encryptedBytes)
-var encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
-console.log(encryptedHex)
-var encryptedBytestoByte = aesjs.utils.hex.toBytes(encryptedHex);
-console.log(encryptedBytestoByte)
-var decrpte_aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
-console.log(decrpte_aesCtr)
-var decryptedBytes = decrpte_aesCtr.decrypt(encryptedBytes);
-console.log(decryptedBytes)
-var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
-console.log(decryptedText)
+const encrypt_text = (key_secret, iv_secret, text) => {
+    let key_256 = pbkdf2.pbkdf2Sync(key_secret, 'salt', 1, 32, 'sha512'),
+        iv_256 = pbkdf2.pbkdf2Sync(iv_secret, 'salt', 1, 16, 'sha512'),
+        key = new Array(...key_256),
+        iv = new Array(...iv_256);
 
-var key_128 = pbkdf2.pbkdf2Sync('password', 'salt', 1, 128 / 8, 'sha512');
-console.log(key_128)
-var key_192 = pbkdf2.pbkdf2Sync('password', 'salt', 1, 192 / 8, 'sha512');
-console.log(key_192)
-var key_256 = pbkdf2.pbkdf2Sync('password', 'salt', 1, 256 / 8, 'sha512');
-console.log(key_256)
+    let textBytes = aesjs.utils.utf8.toBytes(text);
+    let aesCtr = new aesjs.ModeOfOperation.cfb(key, iv);
+    let encryptedBytes = aesCtr.encrypt(textBytes);
+    let encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
+    aesjs.utils.hex.toBytes(encryptedHex);
+    let decrpte_aesCtr = new aesjs.ModeOfOperation.cfb(key, iv);
+    let decryptedBytes = decrpte_aesCtr.decrypt(encryptedBytes);
+    let link = aesjs.utils.utf8.fromBytes(decryptedBytes);
+    return console.log(link);
+}
+const decrypt_text = (hash) => {
+    let hash_to_text = Buffer.from(hash, 'base64').toString('ascii');
+    return console.log(hash_to_text);
+}
+let key = "rnop3TnHwJ7P9zzLb0Z3qUjfhu1Cx9bW";
+let iv = "YsiebTh0Sjr8dZKo";
+let text = "TextMustBeAMultipleOfSegmentSize"
+let hash = "YnVndW4gdmVyaWxlcm4gZGVnZXJsZXJpIGdpcmVjZWtzaW5peiBhcmthZGFzbGFyLg==";
+encrypt_text(key,iv,text);
+decrypt_text(hash);
