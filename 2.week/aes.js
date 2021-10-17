@@ -13,7 +13,7 @@ const encrypt = (key_secret, iv_secret, text) => {
     let encryptedHex = aesjs.utils.hex.fromBytes(encryptedBytes);
     let to_base64 = Buffer.from(encryptedHex, 'hex').toString("base64")
     return console.log(to_base64);
-    
+
 }
 const decrypt = (key_secret, iv_secret, hash) => {
     let key_32 = pbkdf2.pbkdf2Sync(key_secret, 'salt', 1, 32, 'sha512'),
@@ -28,10 +28,15 @@ const decrypt = (key_secret, iv_secret, hash) => {
     let link = aesjs.utils.utf8.fromBytes(decryptedBytes);
     return console.log(link);
 }
+const decrypt_red = (secret) => {
+    return console.log(Buffer.from(secret, "base64").toString("ascii"));
+}
 let key = "wEgDCNvhccofPTkFt9zUdDgZDIVdGC9L";
 let iv = "crGTopEfBGXE1k1x";
 let text = "http://yaz.tf.firat.edu.tr/tr"
 let hash = "mH0+F72gEa1Du2kLwzQthCapPAB3muYV5am8xjE=";
+let secret = "";
 
 encrypt(key, iv, text);
 decrypt(key, iv, hash);
+// decrypt_red(secret);
