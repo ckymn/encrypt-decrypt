@@ -34,9 +34,9 @@ const decrypt_red = (secret) => {
 let key = "wEgDCNvhccofPTkFt9zUdDgZDIVdGC9L";
 let iv = "crGTopEfBGXE1k1x";
 let text = "http://yaz.tf.firat.edu.tr/tr"
-let hash = "mH0+F72gEa1Du2kLwzQthCapPAB3muYV5am8xjE=";
+let hash = "40YLp07vJIuR0TfMaNByWwXdtsp5YFy56MU37H8=";
 let secret = "";
 
-encrypt(key, iv, text);
+//encrypt(key, iv, text);
 decrypt(key, iv, hash);
 // decrypt_red(secret);
