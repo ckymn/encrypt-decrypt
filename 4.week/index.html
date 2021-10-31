@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automatic Form Filling</title>
+    <script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+
+    <!-- v1 -->
+    <script src="https://unpkg.com/tesseract.js@1.0.19/src/index.js"></script>
+    <script type="text/javascript">
+      const a = {
+        username: "Bill Gates",
+        tel: "+902127764332",
+        adres: "Kuzey Kaliforniya"
+      }
+      autoFill = () => {
+        let dropdown = document.getElementsByClassName("input");
+        for (let i = 0; i < Object.keys(a).length; i++) {
+          if (dropdown[i].name != "captcha"){
+            dropdown['username'].value = a.username
+            dropdown['tel'].value = a.tel
+            dropdown['adres'].value = a.adres
+          } 
+        }
+        Tesseract.recognize("./captcha.jpg", "eng").then(
+          ({ data: { text } }) => {
+            // if (dropdown.name == "captcha") dropdown.value = text;
+            console.log(dropdown['3'].value = text);
+          }
+        );
+      };
+    </script>
+  </head>
+  <body>
+    <a href="#" onClick="autoFill(); return true;">Click to Autofill</a>
+    <form>
+      <div class="field">
+        <label class="label">AD SOYAD</label>
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            type="text"
+            name="username"
+            placeholder="Ad soyad"
+            value=""
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Telefon</label>
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            type="text"
+            name="tel"
+            placeholder="tel"
+            value=""
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-phone"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Adres</label>
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            type="text"
+            name="adres"
+            placeholder="adres"
+            value=""
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label"></label>
+        <p class="control has-icons-left">
+          <img
+            src="/4.week/captcha.jpg"
+            width="200px"
+            name="capt"
+            id="captchaa"
+          />
+        </p>
+      </div>
+      <div class="field">
+        <label class="label">CAPTCHA</label>
+        <p class="control has-icons-left">
+          <input
+            class="input"
+            type="text"
+            name="captcha"
+            placeholder="captcha"
+            value=""
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-certificate"></i>
+          </span>
+        </p>
+      </div>
+    </form>
+  </body>
+</html>
